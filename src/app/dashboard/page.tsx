@@ -15,7 +15,7 @@ export default function DashboardPage() {
       <Navbar onOpenCart={() => setIsCartOpen(true)} />
 
       {/* Dashboard Content Container */}
-      <main className="flex-1 max-w-[1200px] w-full mx-auto px-4 py-8 flex flex-col gap-8">
+      <main className="flex-1 max-w-300 w-full mx-auto px-4 py-8 flex flex-col gap-8">
         {/* Header Hero Banner */}
         <div className="bg-[#171717] border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden shadow-2xl">
           <div className="flex flex-col gap-2 z-10">
@@ -26,7 +26,7 @@ export default function DashboardPage() {
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
               Product Inventory &amp; Order Manager
             </h1>
-            <p className="text-sm text-white/70 max-w-[600px] leading-relaxed">
+            <p className="text-sm text-white/70 max-w-150 leading-relaxed">
               Explore inventory items, test stock rules (Out of Stock, Low Stock, Normal), experience optimistic cart updates, and trigger simulated 1500ms checkout.
             </p>
           </div>

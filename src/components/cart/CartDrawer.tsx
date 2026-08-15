@@ -48,7 +48,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
             <div className="h-full flex flex-col items-center justify-center text-center gap-3 text-white/60 my-auto">
               <ShoppingBag className="w-12 h-12 stroke-1 opacity-50" />
               <p className="text-base font-semibold">Your cart is empty</p>
-              <p className="text-xs text-white/40 max-w-[200px]">
+              <p className="text-xs text-white/40 max-w-50">
                 Add some products from the dashboard to get started.
               </p>
             </div>
@@ -59,7 +59,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                 className="bg-[#0D0D0D] border border-white/10 rounded-2xl p-3 flex items-center gap-3"
               >
                 {/* Product Thumbnail */}
-                <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/40 flex-shrink-0">
+                <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/40 shrink-0">
                   <Image
                     src={product.image}
                     alt={product.name}

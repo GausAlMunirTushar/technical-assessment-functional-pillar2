@@ -16,7 +16,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCart }) => {
 
   return (
     <header className="w-full bg-[#171717] text-white border-b border-white/10 sticky top-0 z-40">
-      <div className="max-w-[1200px] mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="max-w-300 mx-auto px-4 py-3 flex items-center justify-between">
         {/* Brand Logo */}
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-[#FD853A] flex items-center justify-center font-bold text-white text-sm shadow-md">
