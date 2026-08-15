@@ -1,10 +1,28 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
-import { ProductGrid } from "@/components/products/ProductGrid";
-import { CartDrawer } from "@/components/cart/CartDrawer";
-import { ShieldCheck, Sparkles, Layers } from "lucide-react";
+import { ProductSkeleton } from "@/components/products/ProductSkeleton";
+import { Sparkles, Layers } from "lucide-react";
+
+const ProductGrid = dynamic(
+  () => import("@/components/products/ProductGrid").then((module) => module.ProductGrid),
+  {
+    loading: () => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ProductSkeleton />
+        <ProductSkeleton />
+        <ProductSkeleton />
+      </div>
+    ),
+  }
+);
+
+const CartDrawer = dynamic(
+  () => import("@/components/cart/CartDrawer").then((module) => module.CartDrawer),
+  { loading: () => null }
+);
 
 export default function DashboardPage() {
   const [isCartOpen, setIsCartOpen] = useState(false);

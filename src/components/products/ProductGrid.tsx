@@ -40,7 +40,11 @@ export const ProductGrid: React.FC = () => {
   }, [testSimulateError, testSimulateEmpty]);
 
   useEffect(() => {
-    fetchProducts();
+    const timeoutId = window.setTimeout(() => {
+      void fetchProducts();
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, [fetchProducts]);
 
   return (

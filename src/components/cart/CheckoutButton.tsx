@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cart-store";
-import { Loader2, ArrowRight, RefreshCw, CheckCircle2 } from "lucide-react";
+import { Loader2, ArrowRight, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 interface CheckoutButtonProps {
@@ -48,7 +48,7 @@ export const CheckoutButton: React.FC<CheckoutButtonProps> = ({ onSuccess }) => 
       }
 
       // Step 6: Success -> Toast + Clear Cart
-      toast.success(`✓ Checkout successful! Txn: ${data.transactionId}`);
+      toast.success(`Checkout successful! Txn: ${data.transactionId}`);
       clearCart();
       if (onSuccess) onSuccess();
     } catch (err) {
@@ -56,7 +56,7 @@ export const CheckoutButton: React.FC<CheckoutButtonProps> = ({ onSuccess }) => 
       setHasFailed(true);
       const errorMsg = err instanceof Error ? err.message : "Checkout transaction failed";
       
-      toast.error(`✕ ${errorMsg}`, {
+      toast.error(errorMsg, {
         action: {
           label: "Retry",
           onClick: () => handleCheckout(false),

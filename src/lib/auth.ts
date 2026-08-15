@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import { DEFAULT_USER_ROLE, isUserRole } from "@/types/auth";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -27,14 +28,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async jwt({ token, user }) {
       if (user) {
-        token.role = "admin"; // Bonus: RBAC role assigned in JWT session
+        token.role = isUserRole(user.role) ? user.role : DEFAULT_USER_ROLE;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (session.user as any).role = token.role || "admin";
+        session.user.role = isUserRole(token.role) ? token.role : DEFAULT_USER_ROLE;
       }
       return session;
     },

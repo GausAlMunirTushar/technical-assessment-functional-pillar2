@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
-import { ShoppingBag, LogOut, User as UserIcon } from "lucide-react";
+import { ShoppingBag, LogOut, User as UserIcon, ShieldCheck } from "lucide-react";
 import { useCartStore } from "@/store/cart-store";
 
 interface NavbarProps {
@@ -13,6 +13,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenCart }) => {
   const { data: session } = useSession();
   const cartCount = useCartStore((state) => state.getCartCount());
+  const roleLabel = session?.user?.role === "admin" ? "Admin" : "Manager";
 
   return (
     <header className="w-full bg-[#171717] text-white border-b border-white/10 sticky top-0 z-40">
@@ -53,9 +54,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCart }) => {
                   <UserIcon className="w-4 h-4" />
                 </div>
               )}
-              <span className="hidden sm:inline font-semibold text-sm">
-                {session.user.name || "Authenticated User"}
-              </span>
+              <div className="hidden sm:flex flex-col leading-tight">
+                <span className="font-semibold text-sm">
+                  {session.user.name || "Authenticated User"}
+                </span>
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wide text-[#FD853A]">
+                  <ShieldCheck className="w-3 h-3" />
+                  {roleLabel}
+                </span>
+              </div>
 
               {/* Logout Button */}
               <button

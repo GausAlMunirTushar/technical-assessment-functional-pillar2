@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { Toaster } from "sonner";
 import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
 import "./globals.css";
 
@@ -10,7 +11,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Pillar 2 — Functional E-Commerce Dashboard",
+  title: "Pillar 2 - Functional E-Commerce Dashboard",
   description: "Next.js App Router, Auth.js v5 Google OAuth, Zustand optimistic cart, and simulated checkout.",
 };
 
@@ -23,8 +24,8 @@ export default function RootLayout({
     <html lang="en" className={`${plusJakartaSans.variable} font-sans antialiased`}>
       <body className="min-h-screen bg-[#0D0D0D] text-white flex flex-col">
         <NextAuthProvider>{children}</NextAuthProvider>
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );
 }
-

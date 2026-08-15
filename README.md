@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Technical Assessment - Pillar 2
 
-## Getting Started
+Functional e-commerce dashboard built with Next.js App Router, Auth.js v5, Zustand, Tailwind CSS, and an internal mock API.
 
-First, run the development server:
+## Setup
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the local development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create `.env.local` in the project root:
 
-## Learn More
+```bash
+AUTH_SECRET="your-auth-secret"
+AUTH_URL="http://localhost:3000"
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+```
 
-To learn more about Next.js, take a look at the following resources:
+`.env.local` is intentionally ignored by git. For local testing, create Google OAuth credentials and add `http://localhost:3000/api/auth/callback/google` as an authorized redirect URI.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Live Demo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+No hosted demo URL is included in this repository. The app is ready to deploy on Vercel or any Next.js-compatible platform once the environment variables above are configured.
 
-## Deploy on Vercel
+## Features Implemented
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Google OAuth authentication through Auth.js v5 / NextAuth.js v5.
+- JWT session persistence.
+- Protected `/dashboard` routes through edge middleware.
+- User profile and logout controls in the navbar.
+- Internal `GET /api/products` endpoint with the three required mock products.
+- Internal `POST /api/checkout` endpoint with a 1500ms simulated processing delay.
+- Inventory rules for normal, low stock, and out-of-stock products.
+- Zustand cart store with optimistic navbar count updates.
+- Cart drawer with add, remove, quantity update, subtotal, clear cart, and persisted local storage.
+- Checkout success and failure toasts, including retry action on failure.
+- Skeleton loading, error with retry, and empty product states.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Bonus Features
+
+- Edge middleware route protection for `/dashboard`.
+- RBAC session role support with typed `session.user.role`.
+- Role-aware UI in the navbar and admin-only product management actions.
+- Code splitting with `next/dynamic` for dashboard product grid and cart drawer.
+- Cart persistence using Zustand `persist` middleware.
+
+## Tech Decisions
+
+Zustand is used instead of Redux because the cart state is compact, local to the frontend, and benefits from a small API with built-in persistence middleware. Auth.js v5 is used directly with the App Router so the same auth configuration supports route handlers, middleware, and session access.
+
+The product and checkout APIs are implemented as internal Next.js route handlers to keep the assessment self-contained while still exercising realistic loading, error, empty, and mutation flows.
+
+## Design Notes
+
+The UI is intentionally dashboard-first rather than a marketing landing page. It emphasizes product inventory visibility, clear stock badges, immediate cart feedback, and predictable checkout states. The evaluator controls are visible so loading, error, empty, and checkout failure states can be tested quickly.
+
+## Known Limitations
+
+- Product data is mocked and stored in source code.
+- Checkout is simulated and does not call a real payment provider.
+- Admin management buttons are conditional UI actions only; edit and delete mutations are outside the assessment scope.
+- All authenticated demo users receive the `admin` role unless a custom provider/user role is added later.

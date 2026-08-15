@@ -2,9 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { Product, getStockStatus } from "@/types/product";
 import { useCartStore } from "@/store/cart-store";
-import { ShoppingCart, AlertCircle, CheckCircle2 } from "lucide-react";
+import { ShoppingCart, AlertCircle, Settings, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface ProductCardProps {
@@ -12,16 +13,18 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { data: session } = useSession();
   const addToCart = useCartStore((state) => state.addToCart);
   const stockStatus = getStockStatus(product.stock);
 
   const isOutOfStock = stockStatus === "OUT_OF_STOCK";
   const isLowStock = stockStatus === "LOW_STOCK";
+  const isAdmin = session?.user?.role === "admin";
 
   const handleAddToCart = () => {
     if (isOutOfStock) return;
     addToCart(product);
-    toast.success(`✓ Added ${product.name} to cart`);
+    toast.success(`Added ${product.name} to cart`);
   };
 
   return (
@@ -49,6 +52,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <div className="absolute top-3 left-3 bg-amber-500 text-black font-extrabold text-xs px-3 py-1.5 rounded-full flex items-center gap-1 shadow-md">
               <AlertCircle className="w-3.5 h-3.5" />
               <span>Low Stock ({product.stock} left)</span>
+            </div>
+          )}
+
+          {isAdmin && (
+            <div className="absolute top-3 right-3 flex items-center gap-1">
+              <button
+                type="button"
+                className="w-8 h-8 rounded-full bg-black/70 border border-white/10 text-white flex items-center justify-center hover:bg-[#FD853A] transition-colors"
+                title="Admin: manage stock"
+                aria-label={`Manage stock for ${product.name}`}
+              >
+                <Settings className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                className="w-8 h-8 rounded-full bg-black/70 border border-white/10 text-white flex items-center justify-center hover:bg-red-600 transition-colors"
+                title="Admin: delete product"
+                aria-label={`Delete ${product.name}`}
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
             </div>
           )}
         </div>
