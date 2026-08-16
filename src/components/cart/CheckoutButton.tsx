@@ -74,7 +74,7 @@ export const CheckoutButton: React.FC<CheckoutButtonProps> = ({ onSuccess }) => 
           <button
             onClick={() => handleCheckout(false)}
             disabled={isProcessing}
-            className="flex-1 py-3 px-4 rounded-full bg-amber-500 hover:bg-amber-600 text-black font-bold text-sm flex items-center justify-center gap-2 transition-colors shadow-md cursor-pointer"
+            className="flex-1 py-3 px-4 rounded-full bg-amber-500 hover:bg-amber-600 text-black font-bold text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer"
           >
             {isProcessing ? (
               <>
@@ -93,7 +93,7 @@ export const CheckoutButton: React.FC<CheckoutButtonProps> = ({ onSuccess }) => 
         <button
           onClick={() => handleCheckout(false)}
           disabled={isProcessing || items.length === 0}
-          className="w-full py-3.5 px-6 rounded-full bg-[#FD853A] hover:bg-[#FD853A]/90 text-white font-extrabold text-base flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-50 cursor-pointer"
+          className="w-full py-3.5 px-6 rounded-full bg-[#FD853A] hover:bg-[#FD853A]/90 text-white font-extrabold text-base flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
         >
           {isProcessing ? (
             <>
@@ -113,7 +113,7 @@ export const CheckoutButton: React.FC<CheckoutButtonProps> = ({ onSuccess }) => 
       <button
         onClick={() => handleCheckout(true)}
         disabled={isProcessing || items.length === 0}
-        className="w-full py-1 text-center text-xs text-white/50 hover:text-white/80 transition-colors underline cursor-pointer"
+        className="w-full py-1 text-center text-xs text-slate-500 hover:text-slate-700 transition-colors underline cursor-pointer"
       >
         [Evaluator Test] Simulate Checkout Failure
       </button>

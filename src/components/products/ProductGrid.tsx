@@ -50,12 +50,12 @@ export const ProductGrid: React.FC = () => {
   return (
     <div className="w-full flex flex-col gap-6">
       {/* Evaluator Testing Controls */}
-      <div className="bg-[#171717]/80 border border-white/10 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 text-xs">
-        <span className="font-semibold text-white/70">
+      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 text-xs">
+        <span className="font-semibold text-slate-700">
           Evaluator State Machine Controls:
         </span>
         <div className="flex items-center gap-4">
-          <label className="flex items-center gap-2 text-white/80 cursor-pointer">
+          <label className="flex items-center gap-2 text-slate-700 cursor-pointer">
             <input
               type="checkbox"
               checked={testSimulateError}
@@ -68,7 +68,7 @@ export const ProductGrid: React.FC = () => {
             <span>Simulate API Error</span>
           </label>
 
-          <label className="flex items-center gap-2 text-white/80 cursor-pointer">
+          <label className="flex items-center gap-2 text-slate-700 cursor-pointer">
             <input
               type="checkbox"
               checked={testSimulateEmpty}

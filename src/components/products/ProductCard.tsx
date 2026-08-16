@@ -28,10 +28,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="bg-[#171717] border border-white/10 rounded-3xl p-5 flex flex-col justify-between hover:border-white/20 transition-all duration-300 shadow-xl group">
+    <div className="bg-white border border-slate-200 rounded-3xl p-5 flex flex-col justify-between hover:border-slate-400 transition-all duration-300 group">
       <div>
         {/* Product Image & Badges */}
-        <div className="relative w-full h-48 rounded-2xl overflow-hidden bg-black/40 mb-4 flex items-center justify-center">
+        <div className="relative w-full h-48 rounded-2xl overflow-hidden bg-slate-100 mb-4 flex items-center justify-center border border-slate-100">
           <Image
             src={product.image}
             alt={product.name}
@@ -42,14 +42,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           {/* Stock Badges */}
           {isOutOfStock && (
-            <div className="absolute top-3 left-3 bg-red-600 text-white font-bold text-xs px-3 py-1.5 rounded-full flex items-center gap-1 shadow-md">
+            <div className="absolute top-3 left-3 bg-red-600 text-white font-bold text-xs px-3 py-1.5 rounded-full flex items-center gap-1">
               <AlertCircle className="w-3.5 h-3.5" />
               <span>Out of Stock</span>
             </div>
           )}
 
           {isLowStock && (
-            <div className="absolute top-3 left-3 bg-amber-500 text-black font-extrabold text-xs px-3 py-1.5 rounded-full flex items-center gap-1 shadow-md">
+            <div className="absolute top-3 left-3 bg-amber-500 text-black font-extrabold text-xs px-3 py-1.5 rounded-full flex items-center gap-1">
               <AlertCircle className="w-3.5 h-3.5" />
               <span>Low Stock ({product.stock} left)</span>
             </div>
@@ -59,7 +59,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <div className="absolute top-3 right-3 flex items-center gap-1">
               <button
                 type="button"
-                className="w-8 h-8 rounded-full bg-black/70 border border-white/10 text-white flex items-center justify-center hover:bg-[#FD853A] transition-colors"
+                className="w-8 h-8 rounded-full bg-white/90 border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-[#FD853A] hover:text-white transition-colors"
                 title="Admin: manage stock"
                 aria-label={`Manage stock for ${product.name}`}
               >
@@ -67,7 +67,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </button>
               <button
                 type="button"
-                className="w-8 h-8 rounded-full bg-black/70 border border-white/10 text-white flex items-center justify-center hover:bg-red-600 transition-colors"
+                className="w-8 h-8 rounded-full bg-white/90 border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors"
                 title="Admin: delete product"
                 aria-label={`Delete ${product.name}`}
               >
@@ -81,16 +81,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <span className="text-xs font-semibold uppercase tracking-wider text-[#FD853A]">
           {product.category}
         </span>
-        <h3 className="text-xl font-bold text-white mt-1 tracking-wide">
+        <h3 className="text-xl font-bold text-slate-900 mt-1 tracking-wide">
           {product.name}
         </h3>
       </div>
 
       {/* Price & Add to Cart Action */}
-      <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between gap-3">
+      <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between gap-3">
         <div>
-          <span className="block text-xs text-white/50">Price</span>
-          <span className="text-2xl font-extrabold text-white">
+          <span className="block text-xs text-slate-500">Price</span>
+          <span className="text-2xl font-extrabold text-slate-900">
             ${product.price.toLocaleString()}
           </span>
         </div>
@@ -101,8 +101,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           disabled={isOutOfStock}
           className={`px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 transition-all cursor-pointer ${
             isOutOfStock
-              ? "bg-white/10 text-white/40 cursor-not-allowed border border-white/5"
-              : "bg-[#FD853A] hover:bg-[#FD853A]/90 text-white shadow-md active:scale-95"
+              ? "bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200"
+              : "bg-[#FD853A] hover:bg-[#FD853A]/90 text-white active:scale-95"
           }`}
           aria-label={
             isOutOfStock

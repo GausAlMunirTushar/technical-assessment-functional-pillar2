@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import { Toaster } from "sonner";
 import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
 import "./globals.css";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const urbanist = Urbanist({
+  variable: "--font-urbanist",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
 });
@@ -21,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} font-sans antialiased`}>
-      <body className="min-h-screen bg-[#0D0D0D] text-white flex flex-col">
+    <html lang="en" className={`${urbanist.variable} font-sans antialiased`}>
+      <body className="min-h-screen bg-white text-slate-900 flex flex-col">
         <NextAuthProvider>{children}</NextAuthProvider>
         <Toaster position="top-right" richColors />
       </body>

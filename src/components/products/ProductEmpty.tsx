@@ -7,13 +7,13 @@ interface ProductEmptyProps {
 
 export const ProductEmpty: React.FC<ProductEmptyProps> = ({ onRetry }) => {
   return (
-    <div className="w-full max-w-md mx-auto bg-[#171717] border border-white/10 rounded-3xl p-8 flex flex-col items-center text-center gap-4 my-8">
-      <div className="w-12 h-12 rounded-full bg-white/10 text-white/60 flex items-center justify-center">
+    <div className="w-full max-w-md mx-auto bg-white border border-slate-200 rounded-3xl p-8 flex flex-col items-center text-center gap-4 my-8">
+      <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center">
         <PackageX className="w-6 h-6" />
       </div>
       <div>
-        <h3 className="text-xl font-bold text-white mb-1">No Products Available</h3>
-        <p className="text-sm text-white/70">
+        <h3 className="text-xl font-bold text-slate-900 mb-1">No Products Available</h3>
+        <p className="text-sm text-slate-600">
           There are currently no products to display in the inventory.
         </p>
       </div>
