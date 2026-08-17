@@ -7,13 +7,13 @@ Functional e-commerce dashboard built with Next.js App Router, Auth.js v5, Zusta
 Install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 Run the local development server:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Open `http://localhost:3000`.
@@ -23,17 +23,18 @@ Open `http://localhost:3000`.
 Create `.env.local` in the project root:
 
 ```bash
-AUTH_SECRET="your-auth-secret"
-AUTH_URL="http://localhost:3000"
-GOOGLE_CLIENT_ID="your-google-client-id"
-GOOGLE_CLIENT_SECRET="your-google-client-secret"
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=nextauth-secret
+GOOGLE_CLIENT_ID=google-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=google-client-secret
 ```
 
 `.env.local` is intentionally ignored by git. For local testing, create Google OAuth credentials and add `http://localhost:3000/api/auth/callback/google` as an authorized redirect URI.
 
 ## Live Demo
 
-No hosted demo URL is included in this repository. The app is ready to deploy on Vercel or any Next.js-compatible platform once the environment variables above are configured.
+https://pillar2-logic.gausalmunir.site
+
 
 ## Features Implemented
 
