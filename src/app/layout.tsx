@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import { Toaster } from "sonner";
-import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
+import { NextAuthProvider } from "@/providers/NextAuthProvider";
 import "./globals.css";
 
 const urbanist = Urbanist({

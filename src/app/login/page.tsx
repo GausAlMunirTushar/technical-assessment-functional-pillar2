@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/Input";
+import { Logo } from "@/components/ui/Logo";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -52,9 +53,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white border border-slate-200 rounded-3xl p-8 flex flex-col items-center gap-6 text-center">
         {/* Logo Badge */}
-        <div className="w-14 h-14 rounded-full bg-[#FD853A] flex items-center justify-center text-white font-extrabold text-xl">
-          JC
-        </div>
+        <Logo size="lg" showText={false} />
 
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
