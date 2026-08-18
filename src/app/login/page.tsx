@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { Input } from "@/components/ui/Input";
@@ -11,11 +11,23 @@ import { Button } from "@/components/ui/Button";
 
 export default function LoginPage() {
 	const router = useRouter();
+	const { data: session, status } = useSession();
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isCredentialsLoading, setIsCredentialsLoading] = useState(false);
 	const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 	const [error, setError] = useState("");
+
+	useEffect(() => {
+		if (status === "authenticated" || session) {
+			router.replace("/dashboard");
+		}
+	}, [status, session, router]);
+
+	if (status === "authenticated" || session) {
+		return null;
+	}
 
 	const handleCredentialsSignIn = async (e: React.FormEvent) => {
 		e.preventDefault();

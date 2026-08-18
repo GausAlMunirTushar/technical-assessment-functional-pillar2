@@ -232,8 +232,32 @@ To facilitate thorough testing by technical reviewers, interactive state toggles
 
 ---
 
-## Known Limitations
+---
 
-* **Mock Product Store**: Product records are stored in memory (`mock-products.ts`) and served via internal API handlers rather than a relational or document database.
-* **Simulated Checkout Endpoint**: Checkout processing executes a 1500ms delay and returns a mock transaction ID without connecting to a live payment gateway (e.g. Stripe or SSLCommerz).
-* **Admin Mutation Scope**: RBAC controls dynamically toggle UI elements (e.g., Settings and Delete buttons for Admin users). Server-side database mutations for product creation and deletion were outside the scope of this frontend UI & logic assessment.
+## Bonus Challenges
+
+- [x] Edge Middleware
+- [x] Role-Based Access Control (RBAC)
+- [x] Performance — Code Splitting
+- [x] Cart Persistence
+
+### Implementation Details
+
+1. **Edge Middleware (`middleware.ts`)**:
+   - Implemented route protection at the Edge using Next.js `middleware.ts` targeting `/dashboard` and `/dashboard/*`.
+   - Automatically redirects unauthenticated users to `/login` and allows authenticated users access to `/dashboard`.
+
+2. **Role-Based Access Control (RBAC)**:
+   - Added support for `admin` and `manager` roles in NextAuth session JWT tokens.
+   - Built a pill-shaped segmented toggle component (`RoleToggle.tsx`) inside the Navbar allowing dynamic switching between `Admin` and `Manager` roles via `useSession().update()`.
+   - **Role-based UI**: Admin renders the "Delete Product" action button on product cards, while Manager completely hides it from the DOM.
+   - **Server-side Security**: Implemented a `DELETE /api/products` route handler with server-side role verification, returning HTTP 403 Forbidden for non-admin attempts.
+
+3. **Performance — Code Splitting**:
+   - Utilized `next/dynamic` code-splitting for heavy dashboard components (`ProductGrid` and `CartDrawer`) with loading skeleton fallbacks.
+   - Verified via production build (`pnpm build`). Lighthouse performance audit screenshot location: `docs/lighthouse-performance.png`.
+
+4. **Cart Persistence**:
+   - Configured Zustand's `persist` middleware on `useCartStore` under storage key `"shopping-cart-storage"`.
+   - Cart state, items, quantities, and optimistic counters persist across browser refreshes.
+

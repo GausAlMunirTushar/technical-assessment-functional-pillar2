@@ -49,13 +49,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       if (isOnDashboard) {
         if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to /login
+        return false;
       }
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.role = isUserRole(user.role) ? user.role : DEFAULT_USER_ROLE;
+      }
+      if (trigger === "update" && session && typeof session === "object" && "role" in session) {
+        const newRole = (session as { role: unknown }).role;
+        if (isUserRole(newRole)) {
+          token.role = newRole;
+        }
       }
       return token;
     },

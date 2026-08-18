@@ -10,9 +10,10 @@ import { toast } from "sonner";
 
 interface ProductCardProps {
   product: Product;
+  onDeleteSuccess?: (id: number) => void;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, onDeleteSuccess }) => {
   const { data: session } = useSession();
   const addToCart = useCartStore((state) => state.addToCart);
   const stockStatus = getStockStatus(product.stock);
@@ -25,6 +26,26 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     if (isOutOfStock) return;
     addToCart(product);
     toast.success(`Added ${product.name} to cart`);
+  };
+
+  const handleDeleteProduct = async () => {
+    try {
+      const res = await fetch(`/api/products?id=${product.id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to delete product");
+      }
+
+      toast.success(data.message || `Deleted ${product.name}`);
+      if (onDeleteSuccess) {
+        onDeleteSuccess(product.id);
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Error deleting product");
+    }
   };
 
   return (
@@ -55,11 +76,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
           )}
 
+          {/* RBAC: Delete & Manage actions rendered ONLY for Admin, completely hidden for Manager */}
           {isAdmin && (
-            <div className="absolute top-3 right-3 flex items-center gap-1">
+            <div className="absolute top-3 right-3 flex items-center gap-1 z-10">
               <button
                 type="button"
-                className="w-8 h-8 rounded-full bg-white/90 border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-[#FD853A] hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-white/90 border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-[#FD853A] hover:text-white transition-colors cursor-pointer"
                 title="Admin: manage stock"
                 aria-label={`Manage stock for ${product.name}`}
               >
@@ -67,7 +89,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </button>
               <button
                 type="button"
-                className="w-8 h-8 rounded-full bg-white/90 border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors"
+                onClick={handleDeleteProduct}
+                className="w-8 h-8 rounded-full bg-white/90 border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-red-600 hover:text-white transition-colors cursor-pointer"
                 title="Admin: delete product"
                 aria-label={`Delete ${product.name}`}
               >
