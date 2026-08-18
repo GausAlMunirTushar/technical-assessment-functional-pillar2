@@ -32,7 +32,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             type={actualType}
             disabled={disabled}
-            className={`w-full py-3 text-sm rounded-full bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-hidden focus:border-[#FD853A] focus:ring-2 focus:ring-[#FD853A]/20 transition-all ${
+            className={`w-full py-2.5 h-11 text-sm rounded-full bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 placeholder:text-sm placeholder:tracking-wider focus:bg-white focus:outline-hidden focus:border-[#FD853A] focus:ring-2 focus:ring-[#FD853A]/20 transition-all ${
               icon ? "pl-11" : "px-4"
             } ${isPassword ? "pr-11" : "pr-4"} ${
               error ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : ""

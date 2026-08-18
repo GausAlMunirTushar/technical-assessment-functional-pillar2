@@ -21,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${urbanist.variable} font-sans antialiased`}>
-      <body className="min-h-screen bg-white text-slate-900 flex flex-col">
+    <html lang="en" className={`${urbanist.variable} font-sans antialiased`} suppressHydrationWarning>
+      <body className="min-h-screen bg-white text-slate-900 flex flex-col" suppressHydrationWarning>
         <NextAuthProvider>{children}</NextAuthProvider>
         <Toaster position="top-right" richColors />
       </body>

@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useSyncExternalStore } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { ShoppingBag, LogOut, User as UserIcon, ShieldCheck } from "lucide-react";
 import { useCartStore } from "@/store/cart-store";
@@ -12,9 +13,18 @@ interface NavbarProps {
   onOpenCart: () => void;
 }
 
+const emptySubscribe = () => () => {};
+
 export const Navbar: React.FC<NavbarProps> = ({ onOpenCart }) => {
   const { data: session } = useSession();
-  const cartCount = useCartStore((state) => state.getCartCount());
+  const isMounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+  const rawCartCount = useCartStore((state) => state.getCartCount());
+  const cartCount = isMounted ? rawCartCount : 0;
+
   const roleLabel = session?.user?.role === "admin" ? "Admin" : "Manager";
 
   return (
@@ -72,12 +82,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCart }) => {
               </button>
             </div>
           ) : (
-            <a
+            <Link
               href="/login"
               className="text-sm font-semibold text-slate-700 hover:text-slate-900 transition-colors"
             >
               Login
-            </a>
+            </Link>
           )}
         </div>
       </div>

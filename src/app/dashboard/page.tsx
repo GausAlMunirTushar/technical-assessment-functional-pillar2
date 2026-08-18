@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { ProductSkeleton } from "@/components/products/ProductSkeleton";
-import { Loader2 } from "lucide-react";
 
 const ProductGrid = dynamic(
   () => import("@/components/products/ProductGrid").then((module) => module.ProductGrid),
@@ -37,15 +36,7 @@ export default function DashboardPage() {
     }
   }, [status, router]);
 
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen bg-white text-slate-900 flex flex-col items-center justify-center p-4">
-        <Loader2 className="w-8 h-8 animate-spin text-[#FD853A]" />
-      </div>
-    );
-  }
-
-  if (status === "unauthenticated" || !session) {
+  if (status === "loading" || status === "unauthenticated" || !session) {
     return null;
   }
 
@@ -56,7 +47,6 @@ export default function DashboardPage() {
 
       {/* Dashboard Content Container */}
       <main className="flex-1 max-w-300 w-full mx-auto px-4 py-8 flex flex-col gap-8">
-
         {/* Product Inventory Grid */}
         <section className="flex flex-col gap-4">
           <h2 className="text-2xl font-bold tracking-tight">
@@ -71,4 +61,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

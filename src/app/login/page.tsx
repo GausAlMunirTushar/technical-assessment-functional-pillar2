@@ -84,7 +84,7 @@ export default function LoginPage() {
 					<Input
 						label="Password"
 						type="password"
-						placeholder="••••••••"
+						placeholder="********"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						icon={<Lock className="w-4 h-4" />}
