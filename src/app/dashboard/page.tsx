@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { ProductSkeleton } from "@/components/products/ProductSkeleton";
+import { GlobalLoading } from "@/components/ui/GlobalLoading";
 
 const ProductGrid = dynamic(
   () => import("@/components/products/ProductGrid").then((module) => module.ProductGrid),
@@ -36,7 +37,11 @@ export default function DashboardPage() {
     }
   }, [status, router]);
 
-  if (status === "loading" || status === "unauthenticated" || !session) {
+  if (status === "loading") {
+    return <GlobalLoading message="Loading Dashboard..." />;
+  }
+
+  if (status === "unauthenticated" || !session) {
     return null;
   }
 
