@@ -111,7 +111,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           }
         >
           <ShoppingCart className="w-4 h-4" />
-          <span>{isOutOfStock ? "Unavailable" : "Add to Cart"}</span>
+          <span>{isOutOfStock ? "Out of Stock" : "Add to Cart"}</span>
         </button>
       </div>
     </div>

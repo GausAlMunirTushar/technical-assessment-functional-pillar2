@@ -50,22 +50,22 @@ export default function LoginPage() {
   const isAnyLoading = isCredentialsLoading || isGoogleLoading;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white border border-slate-200 rounded-3xl p-8 flex flex-col items-center gap-6 text-center">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex items-center justify-center p-3 sm:p-4">
+      <div className="w-full max-w-[380px] bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 flex flex-col items-center gap-4 text-center shadow-sm">
         {/* Logo Badge */}
-        <Logo size="lg" showText={false} />
+        <Logo size="md" showText={false} />
 
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
             Welcome to <span className="text-[#FD853A]">JCREA</span>
           </h1>
-          <p className="text-sm text-slate-600">
-            Sign in to access your protected product dashboard and cart.
+          <p className="text-xs text-slate-600">
+            Sign in to access your protected product dashboard.
           </p>
         </div>
 
         {/* Email & Password Login Form */}
-        <form onSubmit={handleCredentialsSignIn} className="w-full flex flex-col gap-4">
+        <form onSubmit={handleCredentialsSignIn} className="w-full flex flex-col gap-3">
           <Input
             label="Email Address"
             type="email"
@@ -93,7 +93,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isAnyLoading}
-            className="w-full py-3.5 px-6 rounded-full bg-[#FD853A] hover:bg-[#FD853A]/90 text-white font-bold text-base flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-95 disabled:opacity-50 mt-1"
+            className="w-full py-2.5 px-5 rounded-full bg-[#FD853A] hover:bg-[#FD853A]/90 text-white font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-95 disabled:opacity-50 mt-0.5"
           >
             {isCredentialsLoading ? (
               <>
@@ -109,30 +109,30 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="relative w-full flex items-center justify-center">
+        <div className="relative w-full flex items-center justify-center my-0.5">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-slate-200" />
           </div>
-          <span className="relative bg-white px-3 text-xs uppercase font-bold text-slate-400">
+          <span className="relative bg-white px-2.5 text-[10px] uppercase font-bold text-slate-400">
             or continue with
           </span>
         </div>
 
-        {/* Google Sign In Button - Light Theme */}
+        {/* Google Sign In Button */}
         <button
           type="button"
           onClick={handleGoogleSignIn}
           disabled={isAnyLoading}
-          className="w-full py-3.5 px-6 rounded-full bg-white border border-slate-200 text-slate-700 font-bold text-base flex items-center justify-center gap-3 hover:bg-slate-50 transition-colors disabled:opacity-50 cursor-pointer"
+          className="w-full py-2.5 px-5 rounded-full bg-white border border-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center gap-2.5 hover:bg-slate-50 transition-colors disabled:opacity-50 cursor-pointer"
         >
           {isGoogleLoading ? (
             <>
-              <Loader2 className="w-5 h-5 animate-spin text-[#FD853A]" />
+              <Loader2 className="w-4 h-4 animate-spin text-[#FD853A]" />
               <span>Signing in with Google...</span>
             </>
           ) : (
             <>
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
