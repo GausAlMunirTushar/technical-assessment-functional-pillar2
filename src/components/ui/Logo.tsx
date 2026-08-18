@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg" | "xl";
@@ -16,18 +17,17 @@ export const Logo: React.FC<LogoProps> = ({
   className = "",
 }) => {
   const sizeMap = {
-    sm: { circle: "w-8 h-8 text-xs", text: "text-base" },
-    md: { circle: "w-10 h-10 text-sm", text: "text-lg" },
-    lg: { circle: "w-14 h-14 text-xl", text: "text-2xl" },
-    xl: { circle: "w-20 h-20 text-3xl", text: "text-4xl" },
+    sm: { circle: "w-8 h-8", text: "text-base", dimensions: 32 },
+    md: { circle: "w-10 h-10", text: "text-lg", dimensions: 40 },
+    lg: { circle: "w-14 h-14", text: "text-2xl", dimensions: 56 },
+    xl: { circle: "w-20 h-20", text: "text-4xl", dimensions: 80 },
   };
 
-  const { circle, text } = sizeMap[size];
+  const { circle, text, dimensions } = sizeMap[size];
 
   return (
     <div className={`inline-flex items-center gap-3 ${className}`}>
       <div className="relative flex items-center justify-center">
-        {/* Optional animated glow/ring for loading states */}
         {animated && (
           <>
             <div className="absolute inset-0 rounded-full bg-[#FD853A]/30 animate-ping" />
@@ -35,11 +35,16 @@ export const Logo: React.FC<LogoProps> = ({
           </>
         )}
 
-        {/* Main Logo Circle */}
-        <div
-          className={`${circle} rounded-full bg-[#FD853A] flex items-center justify-center font-extrabold text-white tracking-tight shadow-md transition-transform duration-300 relative z-10`}
-        >
-          JC
+        {/* Main Logo SVG Image */}
+        <div className={`${circle} flex items-center justify-center transition-transform duration-300 relative z-10 overflow-hidden rounded-full`}>
+          <Image
+            src="/logo.svg"
+            alt="JCREA Logo"
+            width={dimensions}
+            height={dimensions}
+            className="w-full h-full object-contain"
+            priority
+          />
         </div>
       </div>
 

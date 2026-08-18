@@ -1,160 +1,134 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, Lock, ArrowRight } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
 import { Input } from "@/components/ui/Input";
 import { Logo } from "@/components/ui/Logo";
+import { Button } from "@/components/ui/Button";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isCredentialsLoading, setIsCredentialsLoading] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-  const [error, setError] = useState("");
+	const router = useRouter();
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [isCredentialsLoading, setIsCredentialsLoading] = useState(false);
+	const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+	const [error, setError] = useState("");
 
-  const handleCredentialsSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsCredentialsLoading(true);
-    setError("");
+	const handleCredentialsSignIn = async (e: React.FormEvent) => {
+		e.preventDefault();
+		setIsCredentialsLoading(true);
+		setError("");
 
-    try {
-      const res = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-        callbackUrl: "/dashboard",
-      });
+		try {
+			const res = await signIn("credentials", {
+				email,
+				password,
+				redirect: false,
+				callbackUrl: "/dashboard",
+			});
 
-      if (res?.error) {
-        setError("Invalid email or password");
-        setIsCredentialsLoading(false);
-      } else {
-        window.location.href = "/dashboard";
-      }
-    } catch {
-      setError("Failed to sign in with credentials");
-      setIsCredentialsLoading(false);
-    }
-  };
+			if (res?.error) {
+				setError("Invalid email or password");
+				setIsCredentialsLoading(false);
+			} else {
+				router.push("/dashboard");
+			}
+		} catch {
+			setError("Failed to sign in with credentials");
+			setIsCredentialsLoading(false);
+		}
+	};
 
-  const handleGoogleSignIn = async () => {
-    setIsGoogleLoading(true);
-    try {
-      await signIn("google", { callbackUrl: "/dashboard" });
-    } catch {
-      setIsGoogleLoading(false);
-    }
-  };
+	const handleGoogleSignIn = async () => {
+		setIsGoogleLoading(true);
+		try {
+			await signIn("google", { callbackUrl: "/dashboard" });
+		} catch {
+			setIsGoogleLoading(false);
+		}
+	};
 
-  const isAnyLoading = isCredentialsLoading || isGoogleLoading;
+	const isAnyLoading = isCredentialsLoading || isGoogleLoading;
 
-  return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex items-center justify-center p-3 sm:p-4">
-      <div className="w-full max-w-[380px] bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 flex flex-col items-center gap-4 text-center shadow-sm">
-        {/* Logo Badge */}
-        <Logo size="md" showText={false} />
+	return (
+		<div className="min-h-screen bg-slate-50 text-slate-900 flex items-center justify-center p-3 sm:p-4">
+			<div className="w-full max-w-95 bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 flex flex-col items-center gap-4 text-center">
+				{/* Logo Badge */}
+				<Logo size="md" showText={false} />
 
-        <div className="flex flex-col gap-1">
-          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
-            Welcome to <span className="text-[#FD853A]">JCREA</span>
-          </h1>
-          <p className="text-xs text-slate-600">
-            Sign in to access your protected product dashboard.
-          </p>
-        </div>
+				<div className="flex flex-col gap-1">
+					<h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
+						Welcome to <span className="text-[#FD853A]">JCREA</span>
+					</h1>
+					<p className="text-xs text-slate-600">
+						Sign in to access your protected product dashboard.
+					</p>
+				</div>
 
-        {/* Email & Password Login Form */}
-        <form onSubmit={handleCredentialsSignIn} className="w-full flex flex-col gap-3">
-          <Input
-            label="Email Address"
-            type="email"
-            placeholder="name@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            icon={<Mail className="w-4 h-4" />}
-            required
-            disabled={isAnyLoading}
-          />
+				{/* Email & Password Login Form */}
+				<form onSubmit={handleCredentialsSignIn} className="w-full flex flex-col gap-3">
+					<Input
+						label="Email Address"
+						type="email"
+						placeholder="name@example.com"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						icon={<Mail className="w-4 h-4" />}
+						required
+						disabled={isAnyLoading}
+					/>
 
-          <Input
-            label="Password"
-            type="password"
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            icon={<Lock className="w-4 h-4" />}
-            required
-            disabled={isAnyLoading}
-          />
+					<Input
+						label="Password"
+						type="password"
+						placeholder="••••••••"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+						icon={<Lock className="w-4 h-4" />}
+						required
+						disabled={isAnyLoading}
+					/>
 
-          {error && <p className="text-xs text-red-500 font-semibold text-left pl-1">{error}</p>}
+					{error && <p className="text-xs text-red-500 font-semibold text-left pl-1">{error}</p>}
 
-          <button
-            type="submit"
-            disabled={isAnyLoading}
-            className="w-full py-2.5 px-5 rounded-full bg-[#FD853A] hover:bg-[#FD853A]/90 text-white font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-95 disabled:opacity-50 mt-0.5"
-          >
-            {isCredentialsLoading ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Signing in...</span>
-              </>
-            ) : (
-              <>
-                <span>Sign In</span>
-                <ArrowRight className="w-4 h-4" />
-              </>
-            )}
-          </button>
-        </form>
+					<Button
+						type="submit"
+						variant="primary"
+						isLoading={isCredentialsLoading}
+						loadingText="Signing in..."
+						disabled={isAnyLoading}
+						className="mt-0.5"
+					>
+						<span>Sign In</span>
+						<ArrowRight className="w-4 h-4" />
+					</Button>
+				</form>
 
-        <div className="relative w-full flex items-center justify-center my-0.5">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200" />
-          </div>
-          <span className="relative bg-white px-2.5 text-[10px] uppercase font-bold text-slate-400">
-            or continue with
-          </span>
-        </div>
+				<div className="relative w-full flex items-center justify-center my-0.5">
+					<div className="absolute inset-0 flex items-center">
+						<div className="w-full border-t border-slate-200" />
+					</div>
+					<span className="relative bg-white px-2.5 text-[10px] uppercase font-bold text-slate-400">
+						or continue with
+					</span>
+				</div>
 
-        {/* Google Sign In Button */}
-        <button
-          type="button"
-          onClick={handleGoogleSignIn}
-          disabled={isAnyLoading}
-          className="w-full py-2.5 px-5 rounded-full bg-white border border-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center gap-2.5 hover:bg-slate-50 transition-colors disabled:opacity-50 cursor-pointer"
-        >
-          {isGoogleLoading ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin text-[#FD853A]" />
-              <span>Signing in with Google...</span>
-            </>
-          ) : (
-            <>
-              <svg className="w-4 h-4" viewBox="0 0 24 24">
-                <path
-                  fill="#4285F4"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-                />
-                <path
-                  fill="#EA4335"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-                />
-              </svg>
-              <span>Sign in with Google</span>
-            </>
-          )}
-        </button>
-      </div>
-    </div>
-  );
+				{/* Google Sign In Button */}
+				<Button
+					type="button"
+					variant="outline"
+					onClick={handleGoogleSignIn}
+					isLoading={isGoogleLoading}
+					loadingText="Signing in with Google..."
+					disabled={isAnyLoading}
+					icon={<FcGoogle className="w-5 h-5" />}
+				>
+					<span>Sign in with Google</span>
+				</Button>
+			</div>
+		</div>
+	);
 }
